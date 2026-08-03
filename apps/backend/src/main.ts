@@ -1,6 +1,7 @@
 import { ValidationPipe, VersioningType } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -20,10 +21,24 @@ async function bootstrap() {
     }),
   );
 
+  const swaggerConfig = new DocumentBuilder()
+    .setTitle('Orion AI API')
+    .setDescription('Backend API documentation for Orion AI')
+    .setVersion('1.0.0')
+    .build();
+
+  const swaggerDocument = SwaggerModule.createDocument(app, swaggerConfig);
+
+  SwaggerModule.setup('docs', app, swaggerDocument);
+
   await app.listen(process.env.PORT ?? 3000);
 
   console.log(
-    'Orion backend running on https://localhost:${process.env.PORT ?? 3000}',
+    'Orion backend running on http://localhost:${process.env.PORT ?? 3000}',
+  );
+
+  console.log(
+    'Swagger available at http://localhost:${process.env.PORT ?? 3000}/docs',
   );
 }
 
