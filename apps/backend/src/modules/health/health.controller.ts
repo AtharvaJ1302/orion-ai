@@ -7,11 +7,6 @@ export class HealthController {
 
   @Get()
   getHealth() {
-    return {
-      success: true,
-      message: 'Backend is healthy',
-      data: this.healthService.getHealth(),
-      timestamp: new Date().toISOString(),
-    };
+    return this.healthService.getHealth();
   }
 }
