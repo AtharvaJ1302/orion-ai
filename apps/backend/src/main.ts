@@ -4,6 +4,7 @@ import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ResponseInterceptor } from './common/interceptors/response.interceptor';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
+import { Logger } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -35,16 +36,18 @@ async function bootstrap() {
 
   const swaggerDocument = SwaggerModule.createDocument(app, swaggerConfig);
 
+  const logger = new Logger('Bootstrap');
+
   SwaggerModule.setup('docs', app, swaggerDocument);
 
   await app.listen(process.env.PORT ?? 3000);
 
-  console.log(
-    'Orion backend running on http://localhost:${process.env.PORT ?? 3000}',
+  logger.log(
+    `Orion backend running on http://localhost:${process.env.PORT ?? 3000}`,
   );
 
-  console.log(
-    'Swagger available at http://localhost:${process.env.PORT ?? 3000}/docs',
+  logger.log(
+    `Swagger available at http://localhost:${process.env.PORT ?? 3000}/docs`,
   );
 }
 
