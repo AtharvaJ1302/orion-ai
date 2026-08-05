@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { LoggerModule } from 'nestjs-pino';
+import { PrismaModule } from './database/prisma.module';
 
 import { HealthModule } from './modules/health/health.module';
 
@@ -24,6 +25,8 @@ import { HealthModule } from './modules/health/health.module';
             : undefined,
       },
     }),
+
+    PrismaModule,
 
     HealthModule,
   ],
