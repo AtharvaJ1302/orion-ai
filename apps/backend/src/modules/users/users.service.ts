@@ -32,4 +32,12 @@ export class UsersService {
       updatedAt: user.updatedAt,
     };
   }
+
+  async findById(id: string) {
+    return this.prisma.user.findUnique({
+      where: {
+        id,
+      },
+    });
+  }
 }
