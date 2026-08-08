@@ -1,13 +1,14 @@
 import { Injectable } from '@nestjs/common';
 
-import { AIService } from '../ai/ai.service';
-import type { AIResponse } from '../ai/interfaces/ai-response.interface';
+import { OrchestratorService } from '../ai/orchestrator/orchestrator.service';
+import type { OrchestratorRequest } from '../ai/interfaces/orchestrator-request.interface';
+import type { OrchestratorResponse } from '../ai/interfaces/orchestrator-response.interface';
 
 @Injectable()
 export class ChatService {
-  constructor(private readonly aiService: AIService) {}
+  constructor(private readonly orchestratorService: OrchestratorService) {}
 
-  sendMessage(message: string): Promise<AIResponse> {
-    return this.aiService.generateResponse(message);
+  processMessage(request: OrchestratorRequest): Promise<OrchestratorResponse> {
+    return this.orchestratorService.processMessage(request);
   }
 }

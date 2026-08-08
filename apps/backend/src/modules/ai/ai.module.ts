@@ -7,6 +7,7 @@ import { AIProviderFactory } from './factories/ai-provider.factory';
 import { MockProvider } from './providers/mock.provider';
 import { OpenAIProvider } from './providers/openai.provider';
 import { GeminiProvider } from './providers/gemini.provider';
+import { OrchestratorService } from './orchestrator/orchestrator.service';
 
 @Module({
   imports: [ConfigModule],
@@ -21,8 +22,10 @@ import { GeminiProvider } from './providers/gemini.provider';
     OpenAIProvider,
 
     GeminiProvider,
+
+    OrchestratorService,
   ],
 
-  exports: [AIService],
+  exports: [AIService, OrchestratorService],
 })
 export class AIModule {}
