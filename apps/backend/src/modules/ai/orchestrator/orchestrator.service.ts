@@ -7,12 +7,14 @@ import type { OrchestratorResponse } from '../interfaces/orchestrator-response.i
 import { ExecutionMode } from '../types/execution-mode';
 import type { OrchestratorContext } from '../interfaces/orchestrator-context.interface';
 import { MemoryService } from '../../memory/memory.service';
+import { AIContextBuilder } from '../context/ai-context.builder';
 
 @Injectable()
 export class OrchestratorService {
   constructor(
     private readonly aiService: AIService,
     private readonly memoryService: MemoryService,
+    private readonly aiContextBuilder: AIContextBuilder,
   ) {}
 
   async processMessage(
@@ -31,7 +33,9 @@ export class OrchestratorService {
       },
     };
 
-    const response = await this.aiService.generateResponse(context.message);
+    const aiContext = this.aiContextBuilder.build(context);
+
+    const response = await this.aiService.generateResponse(aiContext);
 
     return {
       response,

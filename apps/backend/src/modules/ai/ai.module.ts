@@ -9,6 +9,7 @@ import { OpenAIProvider } from './providers/openai.provider';
 import { GeminiProvider } from './providers/gemini.provider';
 import { OrchestratorService } from './orchestrator/orchestrator.service';
 import { MemoryModule } from '../memory/memory.module';
+import { AIContextBuilder } from './context/ai-context.builder';
 
 @Module({
   imports: [ConfigModule, MemoryModule],
@@ -25,6 +26,8 @@ import { MemoryModule } from '../memory/memory.module';
     GeminiProvider,
 
     OrchestratorService,
+
+    AIContextBuilder,
   ],
 
   exports: [AIService, OrchestratorService],
