@@ -8,6 +8,7 @@ import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { AIModule } from './modules/ai/ai.module';
 import { ChatModule } from './modules/chat/chat.module';
+import { MemoryModule } from './modules/memory/memory.module';
 
 @Module({
   imports: [
@@ -41,6 +42,8 @@ import { ChatModule } from './modules/chat/chat.module';
     AIModule,
 
     ChatModule,
+
+    MemoryModule,
   ],
 })
 export class AppModule {}
