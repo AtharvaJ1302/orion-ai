@@ -1,6 +1,7 @@
 import { AIService } from './ai.service';
 
 import type { AIResponse } from './interfaces/ai-response.interface';
+import type { AIProviderFactory } from './factories/ai-provider.factory';
 
 describe('AIService', () => {
   let service: AIService;
@@ -11,12 +12,12 @@ describe('AIService', () => {
 
   const providerFactoryMock = {
     getProvider: jest.fn(),
-  };
+  } as unknown as AIProviderFactory;
 
   beforeEach(() => {
     jest.clearAllMocks();
 
-    providerFactoryMock.getProvider.mockReturnValue(providerMock);
+    providerFactoryMock.getProvider = jest.fn().mockReturnValue(providerMock);
 
     service = new AIService(providerFactoryMock);
   });
@@ -28,6 +29,8 @@ describe('AIService', () => {
   it('should send only the message when there are no memories', async () => {
     const response: AIResponse = {
       content: 'Hello from Orion',
+      provider: 'mock',
+      model: 'mock-model',
     };
 
     providerMock.generateResponse.mockResolvedValue(response);
@@ -47,6 +50,8 @@ describe('AIService', () => {
   it('should include a memory in the prompt', async () => {
     const response: AIResponse = {
       content: 'Your favorite programming language is Java.',
+      provider: 'mock',
+      model: 'mock-model',
     };
 
     providerMock.generateResponse.mockResolvedValue(response);
@@ -72,6 +77,8 @@ describe('AIService', () => {
   it('should include multiple memories in the prompt', async () => {
     providerMock.generateResponse.mockResolvedValue({
       content: 'Response',
+      provider: 'mock',
+      model: 'mock-model',
     });
 
     await service.generateResponse({
@@ -101,6 +108,8 @@ describe('AIService', () => {
   it('should work when memory context is undefined', async () => {
     providerMock.generateResponse.mockResolvedValue({
       content: 'Hello',
+      provider: 'mock',
+      model: 'mock-model',
     });
 
     await service.generateResponse({
